@@ -53,30 +53,31 @@ module.exports = function(app) {
             clientSecret: 'f8d2397afa4ca32620744f06417ade80',
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },function(accessToken, refreshToken, profile, done) {
-            process.nextTick(function () {
-                User.findOne({'email': profile.emails[0].value}, function (err, user) {
-                    console.log(profile);
-                    if (err) return done(err);
-                    if (user) {
-                        done(null, user);
-                    } else {
-                        var user = new User();
-                        user.username = profile.emails[0].value;
-                        user.facebook.token = accessToken;
-                        user.facebookprofileUrl = profile.profileUrl;
-                        user.facebook.email = profile.emails[0].value;
-                        user.facebook.fbid = profile.id;
-                        user.facebook.displayName = profile.displayName;
-                        user.firstname =profile.name.givenName;
-                        user.lastname=profile.name.familyName;
-
-                        user.save(function (err) {
-                            if (err) return done(err);
-                            done(null, user);
-                        });
-                    }
-                });
-            });
+          console.log(accessToken, refreshToken, profile, done)
+            // process.nextTick(function () {
+            //     User.findOne({'email': profile.emails[0].value}, function (err, user) {
+            //         console.log(profile);
+            //         if (err) return done(err);
+            //         if (user) {
+            //             done(null, user);
+            //         } else {
+            //             var user = new User();
+            //             user.username = profile.emails[0].value;
+            //             user.facebook.token = accessToken;
+            //             user.facebookprofileUrl = profile.profileUrl;
+            //             user.facebook.email = profile.emails[0].value;
+            //             user.facebook.fbid = profile.id;
+            //             user.facebook.displayName = profile.displayName;
+            //             user.firstname =profile.name.givenName;
+            //             user.lastname=profile.name.familyName;
+            //
+            //             user.save(function (err) {
+            //                 if (err) return done(err);
+            //                 done(null, user);
+            //             });
+            //         }
+            //     });
+            // });
         }
     ));
 
